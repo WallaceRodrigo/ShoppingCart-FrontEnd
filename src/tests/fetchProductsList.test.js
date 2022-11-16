@@ -5,7 +5,7 @@ import computadorSearch from './mocks/search';
 // implemente seus testes aqui
 describe('Teste a função fetchProductsList', () => {
   it('fetchProductsList é uma função', () => {
-    expect(typeof fetchProductsList()).toBe('function');
+    expect(typeof fetchProductsList).toBe('function');
   });
 
   it('fetch é chamado ao executar fetchProductsList', async () => {
@@ -19,11 +19,11 @@ describe('Teste a função fetchProductsList', () => {
     expect(fetch).toHaveBeenCalledWith(endpoint);
   });
 
-  it('Testa o retorna da função', async() => {
+  it('Testa o retorna da função', async () => {
     expect(await fetchProductsList('computador')).toBe(computadorSearch);
   });
 
-  it('Testa o erro retornado pela função, caso não seja passado nenhum argumento', () => {
-    expect(() => fetchProductsList()).toThrow('Termo de busca não informado');
+  it('Testa o erro retornado pela função, caso não seja passado nenhum argumento', async () => {
+    await expect(fetchProductsList()).rejects.toThrowError('Termo de busca não informado');
   });
 });
