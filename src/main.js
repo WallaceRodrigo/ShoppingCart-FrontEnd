@@ -18,18 +18,13 @@ const createProductList = (query) => {
       loading.remove();
       return '';
     });
-  });
 
+    if (results.length < 1) {
+      loading.innerHTML = 'Algum erro ocorreu, recarregue a página e tente novamente';
+      throw new Error(loading.innerHTML);
+    }
+  });
   return productList;
 };
 
-const catchError = () => {
-  try {
-    createProductList('computador');
-  } catch (error) {
-    loading.innerHTML = 'Algum erro ocorreu, recarregue a página e tente novamente';
-    console.log(error);
-  }
-};
-
-catchError();
+createProductList('computador');
