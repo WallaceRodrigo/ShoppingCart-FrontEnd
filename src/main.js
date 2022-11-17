@@ -4,11 +4,16 @@ import { createProductElement, createCartProductElement } from './helpers/shopFu
 import { saveCartID, getSavedCartIDs } from './helpers/cartFunctions';
 import './style.css';
 
-document.querySelector('.cep-button').addEventListener('click', searchCep);
 const productsSection = document.getElementsByClassName('products')[0];
 const loading = document.getElementsByClassName('loading')[0];
 const cartSection = document.getElementsByClassName('cart__products')[0];
 const totalPrice = document.getElementsByClassName('total-price')[0];
+const cartAddress = document.getElementsByClassName('cart__address')[0];
+
+document.querySelector('.cep-button').addEventListener('click', () => {
+  const cepInput = document.getElementsByClassName('cep-input')[0].value;
+  searchCep(cepInput);
+});
 
 const total = [];
 const addProductCart = (id) => {
