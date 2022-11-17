@@ -1,7 +1,7 @@
 import { searchCep } from './helpers/cepFunctions';
 import { fetchProductsList, fetchProduct } from './helpers/fetchFunctions';
 import { createProductElement, createCartProductElement } from './helpers/shopFunctions';
-import { saveCartID } from './helpers/cartFunctions';
+import { saveCartID, getSavedCartIDs } from './helpers/cartFunctions';
 import './style.css';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
@@ -14,7 +14,11 @@ const addProductCart = (id) => {
     const cartProductElement = createCartProductElement(results);
     cartSection.appendChild(cartProductElement);
   });
-  return saveCartID(id);
+};
+
+const getLocal = () => {
+  const savedIDs = getSavedCartIDs();
+  savedIDs.map((id) => addProductCart(id));
 };
 
 const createProductList = (query) => {
@@ -27,7 +31,9 @@ const createProductList = (query) => {
       productsSection.appendChild(productElement);
       return productElement.lastChild
         .addEventListener('click', () => {
-          addProductCart(productElement.firstChild.innerHTML);
+          const button = productElement.firstChild.innerHTML;
+          addProductCart(button);
+          return saveCartID(button);
         });
     });
 
@@ -38,6 +44,9 @@ const createProductList = (query) => {
       throw new Error(loading.innerHTML);
     }
   });
+
+  getLocal();
+
   return productList;
 };
 
