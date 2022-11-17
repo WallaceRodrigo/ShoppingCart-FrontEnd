@@ -8,11 +8,26 @@ document.querySelector('.cep-button').addEventListener('click', searchCep);
 const productsSection = document.getElementsByClassName('products')[0];
 const loading = document.getElementsByClassName('loading')[0];
 const cartSection = document.getElementsByClassName('cart__products')[0];
+const totalPrice = document.getElementsByClassName('total-price')[0];
 
+const total = [];
 const addProductCart = (id) => {
   fetchProduct(id).then((results) => {
     const cartProductElement = createCartProductElement(results);
     cartSection.appendChild(cartProductElement);
+
+    const { price } = results;
+    total.push(price);
+    totalPrice.innerHTML = total.reduce((acc, curr) => acc + curr).toFixed(2);
+
+    cartProductElement.addEventListener('click', () => {
+      const value = cartProductElement.children[1].lastChild.lastChild.innerHTML;
+      const index = total.indexOf(value);
+      total.splice(index, 1);
+      const { innerHTML } = totalPrice;
+      // pega innerHtml do totalPrice, com object destructuring
+      totalPrice.innerHTML = (innerHTML - value).toFixed(2);
+    });
   });
 };
 
