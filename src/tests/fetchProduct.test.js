@@ -20,7 +20,7 @@ describe('Teste a função fetchProduct', () => {
   });
 
   it('Testa o retorna da função', async () => {
-    expect(await fetchProduct('MLB1405519561')).toBe(product);
+    expect(await fetchProduct('MLB1405519561')).toStrictEqual(product);
   });
 
   it('Testa o erro retornado pela função, caso não seja passado nenhum argumento', async () => {
